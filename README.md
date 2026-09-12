@@ -1,2 +1,2 @@
 # claireparizel.com
-Stratégie de compétences
+Change & learn
