@@ -1,2 +1,2 @@
 # claireparizel.com
-Change & learn
+Change & Learn. Transformation.
