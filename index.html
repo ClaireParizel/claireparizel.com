@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Claire Parizel — Conseil & Conférences · Formation & Transformation</title>
+  <meta name="description" content="Claire Parizel — conseil, conférences, formation et transformation. Là où la technique rencontre l'humain.">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --noir:   #111111;
+      --ivoire: #F4F1EA;
+      --brique: #B5341A;
+      --gris:   #6B6762;
+      --case:   24px;           /* taille d'une case du damier */
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--ivoire);
+      color: var(--noir);
+      font-weight: 300;
+      line-height: 1.7;
+    }
+
+    a { color: inherit; }
+
+    .page {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* ── DAMIER (réutilisable) ── */
+    .damier {
+      background: conic-gradient(var(--noir) 25%, var(--ivoire) 0 50%, var(--noir) 0 75%, var(--ivoire) 0)
+                  0 0 / calc(var(--case) * 2) calc(var(--case) * 2);
+    }
+
+    .bandeau-damier {
+      height: calc(var(--case) * 2);
+      border-top: 1px solid var(--noir);
+      border-bottom: 1px solid var(--noir);
+    }
+
+    /* ── HAUT ── */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.8rem 0;
+    }
+
+    .logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.25rem;
+      text-decoration: none;
+    }
+
+    .logo span { color: var(--brique); }
+
+    header nav { display: flex; gap: 1.8rem; }
+
+    header nav a {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.74rem;
+      letter-spacing: 0.04em;
+      color: var(--gris);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    header nav a:hover { color: var(--brique); }
+
+    /* ── PRÉSENTATION ── */
+    .intro {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      padding: 3.5rem 0 5rem;
+    }
+
+    .intro-tag {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.06em;
+      color: var(--brique);
+      margin-bottom: 1.5rem;
+    }
+
+    .intro h1 {
+      font-family: 'DM Serif Display', serif;
+      font-weight: 400;
+      font-size: clamp(2.4rem, 4.8vw, 4rem);
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+      margin-bottom: 1.5rem;
+    }
+
+    .intro h1 em { font-style: italic; color: var(--brique); }
+
+    .intro p.accroche {
+      color: var(--gris);
+      max-width: 42ch;
+      margin-bottom: 2rem;
+    }
+
+    .boutons { display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap; }
+
+    .btn {
+      display: inline-block;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.76rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: var(--ivoire);
+      background: var(--noir);
+      text-decoration: none;
+      padding: 0.85rem 1.6rem;
+      border: 1px solid var(--noir);
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .btn:hover { background: var(--brique); border-color: var(--brique); }
+
+    .lien {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.76rem;
+      letter-spacing: 0.04em;
+      color: var(--gris);
+      text-decoration: none;
+      border-bottom: 1px solid currentColor;
+      padding-bottom: 1px;
+      transition: color 0.2s;
+    }
+
+    .lien:hover { color: var(--brique); }
+
+    /* Photo encadrée d'un damier */
+    .cadre {
+      position: relative;
+      width: calc(var(--case) * 15);
+      max-width: 100%;
+      padding: var(--case);
+      justify-self: center;
+      border: 1px solid var(--noir);
+    }
+
+    .cadre::after {                /* la case qui change de couleur */
+      content: '';
+      position: absolute;
+      top: 0;
+      right: calc(var(--case) * 3);
+      width: var(--case);
+      height: var(--case);
+      background: var(--brique);
+    }
+
+    .photo {
+      aspect-ratio: 1 / 1.15;
+      background: var(--ivoire);
+      border: 1px solid var(--noir);
+      overflow: hidden;
+    }
+
+    .photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .photo-ph {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--gris);
+    }
+
+    /* ── BLOCS ── */
+    .bloc {
+      padding: 4rem 0;
+      display: grid;
+      grid-template-columns: 1fr 2.2fr;
+      gap: 3rem;
+      border-bottom: 1px solid var(--noir);
+    }
+
+    .bloc:last-of-type { border-bottom: none; }
+
+    .coord {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.74rem;
+      font-weight: 500;
+      color: var(--brique);
+      margin-bottom: 0.4rem;
+      display: block;
+    }
+
+    .bloc h2 {
+      font-family: 'DM Serif Display', serif;
+      font-weight: 400;
+      font-size: 1.9rem;
+      line-height: 1.1;
+    }
+
+    /* TEDx : panneau sombre */
+    .panneau {
+      background: var(--noir);
+      color: var(--ivoire);
+      margin: 4rem 0;
+      padding: 3rem;
+      display: grid;
+      grid-template-columns: 1fr 2.2fr;
+      gap: 3rem;
+      position: relative;
+    }
+
+    .panneau .coord { color: #E0694E; }
+
+    .panneau h2 {
+      font-family: 'DM Serif Display', serif;
+      font-weight: 400;
+      font-size: 1.9rem;
+      line-height: 1.1;
+    }
+
+    .tedx-titre {
+      font-family: 'DM Serif Display', serif;
+      font-style: italic;
+      font-size: 1.7rem;
+      line-height: 1.3;
+      margin-bottom: 0.8rem;
+    }
+
+    .tedx-detail {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.78rem;
+      color: rgba(244,241,234,0.6);
+    }
+/* Sources du TEDx */
+.sources {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(244,241,234,0.25);
+}
+
+.sources-titre {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.72rem;
+  color: #E0694E;
+  margin-bottom: 1rem;
+}
+
+.sources ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.sources li {
+  display: grid;
+  grid-template-columns: 3.5rem 1fr;
+  gap: 1rem;
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: rgba(244,241,234,0.85);
+}
+
+.sources .annee {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.78rem;
+  color: #E0694E;
+}
+
+.sources a {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.74rem;
+  color: var(--ivoire);
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+  white-space: nowrap;
+}
+
+.sources a:hover { color: #E0694E; }
+    /* Vidéos */
+    .videos-grille {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 2rem;
+    }
+
+    .video-cadre {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      background: var(--noir);
+    }
+
+    .video-cadre iframe {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%; border: 0;
+    }
+
+    .video-titre {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.05rem;
+      margin-top: 0.8rem;
+      line-height: 1.3;
+    }
+
+    .vide {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--gris);
+    }
+
+    .vide::before {
+      content: '';
+      width: calc(var(--case) * 2);
+      height: calc(var(--case) * 2);
+      border: 1px solid var(--noir);
+      background: conic-gradient(var(--noir) 25%, var(--ivoire) 0 50%, var(--noir) 0 75%, var(--ivoire) 0)
+                  0 0 / var(--case) var(--case);
+    }
+
+    /* Newsletter */
+    .nl-texte { color: var(--gris); margin-bottom: 1.5rem; max-width: 46ch; }
+
+    .articles { margin-top: 2rem; }
+
+    .article {
+      display: flex;
+      justify-content: space-between;
+      gap: 1.5rem;
+      padding: 0.9rem 0;
+      border-top: 1px solid var(--noir);
+      text-decoration: none;
+    }
+
+    .article:last-child { border-bottom: 1px solid var(--noir); }
+
+    .article-titre {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.05rem;
+      transition: color 0.2s;
+    }
+
+    .article:hover .article-titre { color: var(--brique); }
+
+    .article-date {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--gris);
+      white-space: nowrap;
+    }
+
+    /* ── BAS ── */
+    footer {
+      padding: 2rem 0 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.74rem;
+      color: var(--gris);
+    }
+
+    footer .liens { display: flex; gap: 1.8rem; }
+    footer a { text-decoration: none; }
+    footer a:hover { color: var(--brique); }
+
+    /* Bulle d'aide « copier l'adresse » */
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 1.5rem;
+      transform: translateX(-50%);
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.9rem 1.2rem;
+      background: var(--noir);
+      color: var(--ivoire);
+      border: 1px solid var(--ivoire);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.74rem;
+      max-width: calc(100% - 2rem);
+    }
+    .toast[hidden] { display: none; }
+    .toast button {
+      font: inherit;
+      color: var(--ivoire);
+      background: var(--brique);
+      border: 0;
+      padding: 0.45rem 0.9rem;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    @media (max-width: 800px) {
+      .page { padding: 0 1.3rem; }
+      header nav { gap: 1.1rem; }
+      .intro { grid-template-columns: 1fr; gap: 3rem; padding: 2rem 0 3rem; }
+      .bloc { grid-template-columns: 1fr; gap: 1.2rem; padding: 2.5rem 0; }
+      .panneau { grid-template-columns: 1fr; gap: 1.2rem; padding: 2rem 1.5rem; margin: 2.5rem 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page">
+    <header>
+      <a href="#" class="logo">Claire <span>Parizel</span></a>
+      <nav>
+        <a href="#videos">Vidéos</a>
+        <a href="#newsletter">Newsletter</a>
+        <a href="#" data-email>Contact</a>
+      </nav>
+    </header>
+
+    <!-- PRÉSENTATION -->
+    <section class="intro">
+      <div>
+        <p class="intro-tag">Conseil · Conférences · Formation · Transformation</p>
+        <h1>Là où la technique rencontre l'humain - <em>et où ça fait des chocapic.</em></h1>
+        <p class="accroche">Je comprends ce qui résiste, ce qui désire changer, et ce qui rend le mouvement possible.</p>
+        <div class="boutons">
+          <a class="btn" data-substack target="_blank" rel="noopener">La newsletter</a>
+          <a class="lien" href="#" data-email>Me contacter →</a>
+        </div>
+      </div>
+      <div class="cadre damier">
+        <div class="photo">
+          <!-- Pour ta photo, remplace la ligne ci-dessous par : <img src="images/accueil.png" alt="Claire Parizel"> -->
+          <img src="images/portrait.png" alt="Claire Parizel">
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="bandeau-damier damier"></div>
+
+  <div class="page">
+
+    <!-- TEDX -->
+    <section class="panneau" id="tedx">
+      <h2><span class="coord">A1 · à venir</span>TEDx</h2>
+      <div>
+        <p class="tedx-titre">Désirer les mathématiques.</p>
+        <p class="tedx-detail">La Rochelle · </p>
+        <div class="sources">
+  <p class="sources-titre">Sources</p>
+  <ul>
+    <li>
+      <span class="annee">2025</span>
+      <div>
+        Pauline Martinot, Stanislas Dehaene et al., « Rapid emergence of a maths gender gap in first grade », <em>Nature</em>, vol. 643, publié le 11 juin 2025.
+        <a href="https://doi.org/10.1038/s41586-025-09126-4" target="_blank" rel="noopener">Lire →</a>
+      </div>
+    </li>
+    <li>
+      <span class="annee">2007</span>
+      <div>
+        Pascal Huguet et Isabelle Régner, « Stereotype Threat Among Schoolgirls in Quasi-Ordinary Classroom Circumstances », <em>Journal of Educational Psychology</em>, 99(3), p. 545-560.
+        <a href="https://doi.org/10.1037/0022-0663.99.3.545" target="_blank" rel="noopener">Lire →</a>
+      </div>
+    </li>
+    <li>
+      <span class="annee">2025</span>
+      <div>
+        Pauline Charousset et Marion Monnet, « Gendered Teacher Feedback, Students' Math Performance and Enrollment Outcomes: A Text Mining Approach », document de travail PSE n° 2022-19, première diffusion en 2022.
+        <a href="https://shs.hal.science/halshs-03733956" target="_blank" rel="noopener">Lire →</a>
+      </div>
+    </li>
+  </ul>
+</div>
+        <!-- Quand la page des sources existera, retire les marqueurs de commentaire autour de la ligne suivante :
+        <p style="margin-top:1.2rem;"><a class="lien" style="color:#F4F1EA;" href="sources-tedx.html">Sources &amp; bibliographie →</a></p>
+        -->
+      </div>
+    </section>
+
+    <!-- VIDÉOS -->
+    <section class="bloc" id="videos" style="border-top:1px solid var(--noir);">
+      <h2><span class="coord">B2</span>Vidéos</h2>
+      <div class="videos-grille" id="videos-grille"></div>
+    </section>
+
+    <!-- NEWSLETTER -->
+    <section class="bloc" id="newsletter">
+      <h2><span class="coord">C3</span>Newsletter</h2>
+      <div>
+        <p class="nl-texte">Réflexions sur la transformation, les organisations et ce qui les fait bouger.</p>
+        <a class="btn" data-substack target="_blank" rel="noopener">S'abonner sur Substack</a>
+        <div class="articles" id="articles"></div>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="bandeau-damier damier"></div>
+
+  <div class="page">
+    <footer>
+      <span>© 2026 Claire Parizel</span>
+      <div class="liens">
+        <a href="#" data-email>Email</a>
+        <a data-linkedin target="_blank" rel="noopener">LinkedIn</a>
+        <a data-substack target="_blank" rel="noopener">Substack</a>
+      </div>
+    </footer>
+  </div>
+
+<div id="toast" class="toast" hidden>
+  <span>Votre messagerie ne s'ouvre pas ?</span>
+  <button id="copier" type="button">Copier l'adresse</button>
+</div>
+
+<script>
+  /* ═══════════════════════════════════════════
+     ZONE D'ADMINISTRATION — tout se modifie ici
+     ═══════════════════════════════════════════ */
+  const CONFIG = {
+    emailNom:     "contact",             // la partie AVANT le @
+    emailDomaine: "claireparizel.com",   // la partie APRÈS le @
+    emailSujet:   "Prise de contact depuis votre site",
+    substack: "https://claireparizel.substack.com",
+    linkedin: "https://www.linkedin.com/in/claireparizel",
+
+    /* Pour ajouter une vidéo YouTube, ajoute une ligne dans la liste.
+       L'identifiant = la fin du lien YouTube : youtube.com/watch?v=ICI
+       Exemple : { id: "dQw4w9WgXcQ", titre: "Titre de la vidéo" }, */
+    videos: [
+      // { id: "", titre: "" },
+    ],
+
+    nombreArticles: 3
+  };
+  /* ═════════════════ fin de la zone d'administration ═════════════════ */
+
+  document.querySelectorAll("[data-substack]").forEach(a => a.href = CONFIG.substack);
+  // Contact : l'adresse est assemblée seulement au clic (jamais écrite en clair dans la page)
+  const bulle = document.getElementById("toast");
+  const boutonCopier = document.getElementById("copier");
+  let minuteur;
+  const adresse = () => CONFIG.emailNom + "@" + CONFIG.emailDomaine;
+
+  document.querySelectorAll("[data-email]").forEach(a => {
+    a.addEventListener("click", e => {
+      e.preventDefault();
+      window.location.href = "mailto:" + adresse() + "?subject=" + encodeURIComponent(CONFIG.emailSujet);
+      boutonCopier.textContent = "Copier l'adresse";
+      bulle.hidden = false;
+      clearTimeout(minuteur);
+      minuteur = setTimeout(() => { bulle.hidden = true; }, 9000);
+    });
+  });
+
+  boutonCopier.addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(adresse());
+      boutonCopier.textContent = "Adresse copiée ✓";
+    } catch (e) {
+      boutonCopier.textContent = "Copie impossible";
+    }
+  });
+  document.querySelectorAll("[data-linkedin]").forEach(a => a.href = CONFIG.linkedin);
+
+  // Vidéos
+  (function () {
+    const grille = document.getElementById("videos-grille");
+    const videos = CONFIG.videos.filter(v => v.id);
+    if (!videos.length) {
+      const p = document.createElement("p");
+      p.className = "vide";
+      p.textContent = "Case vide pour l'instant — bientôt.";
+      grille.appendChild(p);
+      return;
+    }
+    videos.forEach(v => {
+      const bloc = document.createElement("div");
+      const cadre = document.createElement("div");
+      cadre.className = "video-cadre";
+      const iframe = document.createElement("iframe");
+      iframe.src = "https://www.youtube-nocookie.com/embed/" + encodeURIComponent(v.id);
+      iframe.title = v.titre || "Vidéo";
+      iframe.loading = "lazy";
+      iframe.allowFullscreen = true;
+      cadre.appendChild(iframe);
+      bloc.appendChild(cadre);
+      if (v.titre) {
+        const t = document.createElement("p");
+        t.className = "video-titre";
+        t.textContent = v.titre;
+        bloc.appendChild(t);
+      }
+      grille.appendChild(bloc);
+    });
+  })();
+
+  // Derniers articles Substack (automatique)
+  (async function () {
+    const zone = document.getElementById("articles");
+    try {
+      const url = "https://api.rss2json.com/v1/api.json?rss_url=" +
+        encodeURIComponent(CONFIG.substack + "/feed") + "&count=" + CONFIG.nombreArticles;
+      const data = await (await fetch(url)).json();
+      if (data.status !== "ok" || !data.items.length) return;
+      data.items.forEach(item => {
+        const a = document.createElement("a");
+        a.className = "article";
+        a.href = item.link;
+        a.target = "_blank";
+        a.rel = "noopener";
+        const t = document.createElement("span");
+        t.className = "article-titre";
+        t.textContent = item.title;
+        const d = document.createElement("span");
+        d.className = "article-date";
+        d.textContent = new Date(item.pubDate.replace(" ", "T")).toLocaleDateString("fr-FR",
+          { day: "numeric", month: "short", year: "numeric" });
+        a.appendChild(t);
+        a.appendChild(d);
+        zone.appendChild(a);
+      });
+    } catch (e) { /* si ça échoue, seul le bouton reste affiché */ }
+  })();
+</script>
+</body>
+</html>
