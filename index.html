@@ -56,12 +56,22 @@
     }
 
     .logo {
+      display: block;
       font-family: 'DM Serif Display', serif;
       font-size: 1.25rem;
       text-decoration: none;
     }
 
     .logo span { color: var(--brique); }
+    .slogan {
+  display: block;
+  margin-top: 0.2rem;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.66rem;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  color: var(--gris);
+}
 
     header nav { display: flex; gap: 1.8rem; }
 
@@ -420,7 +430,10 @@
 
   <div class="page">
     <header>
-      <a href="#" class="logo">Claire <span>Parizel</span></a>
+      <a href="#" class="logo">
+  Claire <span>Parizel</span>
+  <small class="slogan">Change &amp; Learn. Transformation.</small>
+</a>
       <nav>
         <a href="#videos">Vidéos</a>
         <a href="#newsletter">Newsletter</a>
